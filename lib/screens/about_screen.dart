@@ -10,7 +10,7 @@ class AboutScreen extends StatelessWidget {
           "About Me",
           style: GoogleFonts.lobster(fontSize: 28, color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueGrey,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -114,7 +114,7 @@ class AboutScreen extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey,
     );
   }
 

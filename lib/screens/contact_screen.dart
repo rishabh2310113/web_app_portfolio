@@ -18,7 +18,7 @@ class ContactScreen extends StatelessWidget {
           "Contact Me",
           style: GoogleFonts.lobster(fontSize: 28, color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueGrey,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -169,7 +169,7 @@ class ContactScreen extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey,
     );
   }
 }

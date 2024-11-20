@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_app_portfolio/screens/project_screen.dart';
 import 'package:web_app_portfolio/utils/responsive_layout.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web_app_portfolio/screens/home_screen.dart';
@@ -39,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
                 _buildNavButton("Home", HomeScreen()),
                 _buildNavButton("About", AboutScreen()),
                 _buildNavButton("Contact", ContactScreen()),
-                 _buildNavButton("Projects", ContactScreen()),
+                 _buildNavButton("Projects", ProjectsScreen()),
               ]
             : null, 
       ),
@@ -51,15 +52,20 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   const DrawerHeader(
                     decoration: BoxDecoration(
-                      color:  Colors.red,
+                      color:  Colors.blueGrey,
                     ),
-                    child: Text(
-                      'Navigation',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    child: Column(
+                      crossAxisAlignment : CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "<Importing Creativity...",
+                          style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.home),
+                    leading: Icon(Icons.home , color: Colors.redAccent,),
                     title: Text('Home'),
                     onTap: () {
                       _navigateToScreen(HomeScreen());
@@ -67,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.info),
+                    leading: Icon(Icons.info , color: Colors.redAccent),
                     title: Text('About'),
                     onTap: () {
                       _navigateToScreen(AboutScreen());
@@ -75,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.contact_mail),
+                    leading: Icon(Icons.contact_mail , color: Colors.redAccent),
                     title: Text('Contact'),
                     onTap: () {
                       _navigateToScreen(ContactScreen());
@@ -83,10 +89,10 @@ class _MainScreenState extends State<MainScreen> {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.contact_mail),
+                    leading: const Icon(Icons.align_horizontal_left_rounded , color: Colors.redAccent),
                     title: Text('Projects'),
                     onTap: () {
-                      _navigateToScreen(ContactScreen());
+                      _navigateToScreen(ProjectsScreen());
                       Navigator.pop(context); 
                     },
                   ),
@@ -94,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
       body: AnimatedSwitcher(
-        duration: Duration(milliseconds: 500), 
+        duration: const Duration(milliseconds: 500), 
         child: _currentScreen,
       ),
     );
