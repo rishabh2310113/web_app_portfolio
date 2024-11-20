@@ -178,7 +178,7 @@ class ContactScreen extends StatelessWidget {
     return IconButton(
       icon: Icon(
         icon,
-        color: Colors.white70,
+        color: Colors.white,
         size: 32,
       ),
       onPressed: onPressed,

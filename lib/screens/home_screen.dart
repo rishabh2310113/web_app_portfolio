@@ -117,12 +117,12 @@ class HomeScreen extends StatelessWidget {
         ),
 
         Positioned(
-          top: 20,
-          right: 20,
+          top: 30,
+          right: 30,
           child: ResponsiveLayout(
-            mobile: SizedBox.shrink(), 
+            mobile: const SizedBox.shrink(), 
             tablet: _responsiveImage(300, 250), 
-            desktop: _responsiveImage(450, 400),
+            desktop: _responsiveImage(700, 500),
           ),
         ),
       ],
@@ -134,7 +134,7 @@ class HomeScreen extends StatelessWidget {
       'assets/Port1.png', 
       width: width,
       height: height,
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   }
 
@@ -142,7 +142,7 @@ class HomeScreen extends StatelessWidget {
     return IconButton(
       icon: Icon(
         icon,
-        color: Colors.white70,
+        color: Colors.white,
         size: 32,
       ),
       onPressed: onPressed,
