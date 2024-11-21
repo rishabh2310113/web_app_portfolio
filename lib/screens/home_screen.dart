@@ -1,4 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:web_app_portfolio/utils/responsive_layout.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -53,7 +57,23 @@ class HomeScreen extends StatelessWidget {
                 FadeInAnimation(
                   delay: 900,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                          onPressed: () async {
+                          try {
+                            final data = await rootBundle.load('assets/resume.pdf');
+                            final bytes = data.buffer.asUint8List();
+                            final dir = await getTemporaryDirectory();
+                            final file = File('${dir.path}/resume.pdf');
+                            await file.writeAsBytes(bytes);
+                            OpenFile.open(file.path);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error loading file: $e'),
+                                duration: Duration(seconds: 3),
+                              ),
+                            );
+                          }
+                        },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red, 
                       padding: const EdgeInsets.symmetric(

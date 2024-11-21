@@ -121,7 +121,7 @@ class AboutScreen extends StatelessWidget {
   List<Widget> _buildSkillChips(List<String> skills) {
     return skills
         .map(
-          (skill) => Chip(
+          (skill) => Chip(  // lambda function
             label: Text(skill),
             backgroundColor: Colors.redAccent,
             labelStyle: GoogleFonts.poppins(color: Colors.white),
