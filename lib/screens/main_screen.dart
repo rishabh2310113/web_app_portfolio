@@ -24,14 +24,20 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Color(0xFF40E0D0),
       appBar: AppBar(
-        title: Text(
+         title: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Colors.red, Colors.purpleAccent],
+          ).createShader(bounds),
+        child: Text(
           "<RISHABH RANJAN />",
           style: GoogleFonts.lobster(
             fontSize: 28,
             color: Colors.white,
           ),
         ),
+         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         elevation: 0, 
@@ -47,12 +53,17 @@ class _MainScreenState extends State<MainScreen> {
       drawer: ResponsiveLayout.isDesktop(context)
           ? null
           : Drawer(
+             backgroundColor: Colors.blueGrey,
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
                   const DrawerHeader(
                     decoration: BoxDecoration(
-                      color:  Colors.blueGrey,
+                       gradient: LinearGradient(
+                        colors: [Colors.redAccent, Colors.purple],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
                     ),
                     child: Column(
                       crossAxisAlignment : CrossAxisAlignment.center,
@@ -60,40 +71,41 @@ class _MainScreenState extends State<MainScreen> {
                         Text(
                           "<Importing Creativity...",
                           style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.home , color: Colors.redAccent,),
-                    title: Text('Home'),
+                 _buildDrawerItem(
+                    title: "Home",
+                    icon: Icons.home,
                     onTap: () {
                       _navigateToScreen(HomeScreen());
-                      Navigator.pop(context); 
+                      Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.info , color: Colors.redAccent),
-                    title: Text('About'),
+                  _buildDrawerItem(
+                    title: "About",
+                    icon: Icons.info,
                     onTap: () {
                       _navigateToScreen(AboutScreen());
-                      Navigator.pop(context); 
+                      Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: Icon(Icons.contact_mail , color: Colors.redAccent),
-                    title: Text('Contact'),
+                  _buildDrawerItem(
+                    title: "Contact",
+                    icon: Icons.contact_mail,
                     onTap: () {
                       _navigateToScreen(ContactScreen());
-                      Navigator.pop(context); 
+                      Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.align_horizontal_left_rounded , color: Colors.redAccent),
-                    title: Text('Projects'),
+                  _buildDrawerItem(
+                    title: "Projects",
+                    icon: Icons.work,
                     onTap: () {
                       _navigateToScreen(ProjectsScreen());
-                      Navigator.pop(context); 
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -118,5 +130,23 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-}
 
+    Widget _buildDrawerItem({
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.redAccent),
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontSize: 16,
+        ),
+      ),
+      hoverColor: Colors.red.withOpacity(0.1), 
+      onTap: onTap,
+    );
+  }
+}

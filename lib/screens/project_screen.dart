@@ -8,10 +8,17 @@ class ProjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+          title: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Colors.redAccent, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+        child: Text(
           "My Projects",
           style: GoogleFonts.lobster(fontSize: 28, color: Colors.white),
         ),
+          ),
         backgroundColor: Colors.blueGrey,
         elevation: 0,
       ),
@@ -20,7 +27,9 @@ class ProjectsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            FadeInAnimation(
+              delay: 200,
+            child :Text(
               "Here are some of my projects:",
               style: GoogleFonts.poppins(
                 fontSize: 20,
@@ -28,29 +37,39 @@ class ProjectsScreen extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 16),
-            _buildProjectCard(
-              context,
-              title: "E-Commerce App",
-              description:
-                  "A feature-rich e-commerce app with product listings, shopping cart, and checkout functionality.",
-              githubLink: "https://github.com/rishabh2310113/e_commerce",
             ),
             const SizedBox(height: 16),
-            _buildProjectCard(
-              context,
-              title: "To-Do App",
-              description:
-                  "A simple and efficient to-do app for managing tasks and improving productivity.",
-              githubLink: "https://github.com/rishabh2310113/to_do_application",
+            FadeInAnimation(
+              delay: 400,
+              child: _buildProjectCard(
+                context,
+                title: "E-Commerce App",
+                description:
+                    "A feature-rich e-commerce app with product listings, shopping cart, and checkout functionality.",
+                githubLink: "https://github.com/rishabh2310113/e_commerce",
+              ),
             ),
             const SizedBox(height: 16),
-            _buildProjectCard(
-              context,
-              title: "Quiz App",
-              description:
-                  "An interactive quiz app with multiple categories, leaderboards, and scoring features.",
-              githubLink: "https://github.com/rishabh2310113/quiz_app",
+            FadeInAnimation(
+              delay: 600,
+              child: _buildProjectCard(
+                context,
+                title: "To-Do App",
+                description:
+                    "A simple and efficient to-do app for managing tasks and improving productivity.",
+                githubLink: "https://github.com/rishabh2310113/to_do_application",
+              ),
+            ),
+            const SizedBox(height: 16),
+            FadeInAnimation(
+              delay: 800,
+              child: _buildProjectCard(
+                context,
+                title: "Quiz App",
+                description:
+                    "An interactive quiz app with multiple categories, leaderboards, and scoring features.",
+                githubLink: "https://github.com/rishabh2310113/quiz_app",
+              ),
             ),
           ],
         ),
@@ -115,6 +134,33 @@ class ProjectsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class FadeInAnimation extends StatelessWidget {
+  final Widget child;
+  final int delay;
+
+  const FadeInAnimation({required this.child, required this.delay});
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder(
+      duration: Duration(milliseconds: 1000),
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      curve: Curves.easeInOut,
+      builder: (context, value, child) {
+        return Opacity(
+          opacity: value as double,
+          child: Transform.translate(
+            offset: Offset(0.0, 50 * (1 - (value as double))),
+            child: child,
+          ),
+        );
+      },
+      child: child,
     );
   }
 }

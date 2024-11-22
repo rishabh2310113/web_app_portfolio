@@ -3,13 +3,27 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactScreen extends StatelessWidget {
+ class ContactScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> socialLinks = [
+    {
+      "icon": FontAwesomeIcons.instagram,
+      "url":
+          'https://www.instagram.com/invites/contact/?igshid=q6tstl4h6m60',
+    },
+    {
+      "icon": FontAwesomeIcons.twitter,
+      "url": 'https://twitter.com/Rishabh2310113',
+    },
+    {
+      "icon": FontAwesomeIcons.linkedin,
+      "url": 'https://www.linkedin.com/in/rishabh-ranjan18/',
+    },
+    {
+      "icon": FontAwesomeIcons.github,
+      "url": 'https://github.com/rishabh2310113',
+    },
+  ];
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,88 +54,7 @@ class ContactScreen extends StatelessWidget {
               style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
             ),
             const SizedBox(height: 32),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: "Your Name",
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your name";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: "Your Email",
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your email";
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return "Please enter a valid email address";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      labelText: "Your Message",
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    maxLines: 5,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter a message";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Message sent successfully!")),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: Text(
-                      "Send Message",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+             ContactForm(),
             const SizedBox(height: 32),
             Text(
               "Connect with Me",
@@ -134,37 +67,15 @@ class ContactScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildSocialIcon(FontAwesomeIcons.instagram, () async {
-                  final Uri url = Uri.parse(
-                      'https://www.instagram.com/invites/contact/?igshid=q6tstl4h6m60');
-                  if (!await launchUrl(url)) {
-                    throw Exception('Could not launch $url');
-                  }
-                }),
-                const SizedBox(width: 16),
-                _buildSocialIcon(FontAwesomeIcons.twitter, () async {
-                  final Uri url = Uri.parse('https://twitter.com/Rishabh2310113');
-                  if (!await launchUrl(url)) {
-                    throw Exception('Could not launch $url');
-                  }
-                }),
-                const SizedBox(width: 16),
-                _buildSocialIcon(FontAwesomeIcons.linkedin, () async {
-                  final Uri url =
-                      Uri.parse('https://www.linkedin.com/in/rishabh-ranjan18/');
-                  if (!await launchUrl(url)) {
-                    throw Exception('Could not launch $url');
-                  }
-                }),
-                const SizedBox(width: 16),
-                _buildSocialIcon(FontAwesomeIcons.github, () async {
-                  final Uri url = Uri.parse('https://github.com/rishabh2310113');
-                  if (!await launchUrl(url)) {
-                    throw Exception('Could not launch $url');
-                  }
-                }),
-              ],
+              children:  socialLinks.map((link) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: SocialIcon(
+                    icon: link["icon"]!,
+                    url: link["url"]!,
+                  ),
+                );
+              }).toList(),
             ),
           ],
         ),
@@ -174,15 +85,126 @@ class ContactScreen extends StatelessWidget {
   }
 }
 
-  Widget _buildSocialIcon(IconData icon, VoidCallback onPressed) {
+
+class ContactForm extends StatelessWidget {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(
+              labelText: "Your Name",
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.white,
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter your name";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              labelText: "Your Email",
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.white,
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter your email";
+              }
+              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                return "Please enter a valid email address";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _messageController,
+            decoration: const InputDecoration(
+              labelText: "Your Message",
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.white,
+            ),
+            maxLines: 5,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter a message";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Message sent successfully!"),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                _nameController.clear();
+                _emailController.clear();
+                _messageController.clear();
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 12,
+              ),
+            ),
+            child: Text(
+              "Send Message",
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SocialIcon extends StatelessWidget {
+  final IconData icon;
+  final String url;
+
+  const SocialIcon({required this.icon, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(
         icon,
         color: Colors.white,
         size: 32,
       ),
-      onPressed: onPressed,
+      onPressed: () async {
+        final Uri link = Uri.parse(url);
+        if (!await launchUrl(link)) {
+          throw Exception('Could not launch $url');
+        }
+      },
     );
   }
-
-
+}
